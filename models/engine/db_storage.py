@@ -1,4 +1,5 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, insert
+from sqlalchemy.orm import sessionmaker
 from base_model import Base
 from os import getenv
 
@@ -21,3 +22,6 @@ class DBStorage:
         )
         if HBNB_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
+            
+    def all(self, cls):
+        self.__session = session
