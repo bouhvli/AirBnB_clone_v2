@@ -53,10 +53,14 @@ def do_deploy(archive_path):
     except Exception:
         return (False)
 
+
 def deploy():
-    """_summary_
+    """
+    Fabric script (based on the file 2-do_deploy_web_static.py)
+    that creates and distributes an archive to your web servers,
+    using the function deploy
     """
     archive_path = do_pack()
-    if not path.exists(archive_path):
+    if not archive_path:
         return (False)
     return (do_deploy(archive_path))
