@@ -6,6 +6,8 @@ from os import path
 
 env.hosts = ['100.24.255.23', '54.234.80.214']
 env.user = 'ubuntu'
+
+
 def do_pack():
     """
     generates a .tgz archive from the contents of
@@ -23,6 +25,7 @@ def do_pack():
               .format(archive_file_name, path.getsize(archive_file_name)))
     except Exception:
         return (None)
+
 
 def do_deploy(archive_path):
     """
