@@ -15,15 +15,18 @@ def do_pack():
     he web_static folder of your AirBnB ClonSe repo,
     using the function do_pack.
     """
-    local('mkdir -p versions')
-    moment = datetime.now()
-    archive_file_name = 'versions/web_static_{}{}{}{}{}{}.tgz'.format(
-        moment.year, moment.month, moment.day, moment.hour,
-        moment.minute, moment.second)
-    local('tar -cvzf {} web_static'.format(archive_file_name))
-    print('web_static packed: {} -> {}'
-          .format(archive_file_name, path.getsize(archive_file_name)))
-
+    try:
+        local('mkdir -p versions')
+        moment = datetime.now()
+        archive_file_name = 'versions/web_static_{}{}{}{}{}{}.tgz'.format(
+            moment.year, moment.month, moment.day, moment.hour,
+            moment.minute, moment.second)
+        local('tar -cvzf {} web_static'.format(archive_file_name))
+        print('web_static packed: {} -> {}'
+              .format(archive_file_name, path.getsize(archive_file_name)))
+        return (archive_file_name)
+    except Exception:
+        return (None)
 
 def do_deploy(archive_path):
     """

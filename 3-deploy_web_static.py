@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Fabric script that generates a .tgz archive"""
 from datetime import datetime
-from fabric.api import local, put, run, env
+from fabric.api import *
 from os import path
 
 
@@ -24,6 +24,7 @@ def do_pack():
         local('tar -cvzf {} web_static'.format(archive_file_name))
         print('web_static packed: {} -> {}'
               .format(archive_file_name, path.getsize(archive_file_name)))
+        return (archive_file_name)
     except Exception:
         return (None)
 
@@ -35,14 +36,13 @@ def do_deploy(archive_path):
     """
     if not path.exists(archive_path):
         return (False)
-
-    get_file_name = archive_path.split('/')[-1]
-    file_path = '/data/web_static/releases/'
-    folder_path = file_path + get_file_name.split('.')[0]
     try:
+        get_file_name = archive_path.split('/')[-1]
+        file_path = '/data/web_static/releases/'
+        folder_path = file_path + get_file_name.split('.')[0]
         put(archive_path, '/tmp')
         run('mkdir -p {}/'.format(folder_path))
-        run('tar -xzf /tmp/{} -c {}'.format(get_file_name, folder_path))
+        run('tar -xzf /tmp/{} -C {}'.format(get_file_name, folder_path))
         run('rm /tmp/{}'.format(get_file_name))
         run('mv {}/web_static/* {}/'.format(folder_path, folder_path))
         run('rm -rf {}/web_static'.format(folder_path))
@@ -61,6 +61,6 @@ def deploy():
     using the function deploy
     """
     archive_path = do_pack()
-    if not archive_path:
+    if archive_path is None:
         return (False)
-    return (do_deploy(archive_path))
+    return do_deploy(archive_path)
