@@ -23,14 +23,14 @@ def hbnb():
 
 @app.route('/c/<text>')
 def c_is_fun(text):
-    """"""
+    """display “C ”, followed by the value of the text variable """
     return("C {}".format(text.replace("_", " ")))
 
 
 @app.route('/python/')
 @app.route('/python/<text>')
 def py_is_fun(text=None):
-    """"""
+    """display “Python ”, followed by the value of the text variable """
     if (text is None):
         return ("Python is cool")
     else:
