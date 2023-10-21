@@ -28,6 +28,7 @@ def do_pack():
     except Exception:
         return (None)
 
+
 def do_deploy(archive_path):
     """
         Fabric script that distributes an archive to your web servers,
